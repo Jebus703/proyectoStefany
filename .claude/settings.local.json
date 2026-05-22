@@ -1,7 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(npx @angular/cli@17 new front --routing --style=css --skip-git --skip-tests)"
-    ]
-  }
-}
