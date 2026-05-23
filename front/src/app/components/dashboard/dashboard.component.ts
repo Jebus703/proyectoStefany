@@ -37,7 +37,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     if (!this.authService.isLoggedIn()) {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/login'], { replaceUrl: true });
       return;
     }
     this.loadProjects();
@@ -57,7 +57,7 @@ export class DashboardComponent implements OnInit {
         console.error('Error al cargar proyectos:', error);
         if (error.status === 401) {
           this.authService.logout();
-          this.router.navigate(['/login']);
+          this.router.navigate(['/login'], { replaceUrl: true });
         }
       }
     });

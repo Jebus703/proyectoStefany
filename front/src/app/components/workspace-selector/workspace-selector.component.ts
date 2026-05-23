@@ -40,7 +40,7 @@ export class WorkspaceSelectorComponent implements OnInit {
       next: (response) => {
         this.isLoading = false;
         if (response.success) {
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/dashboard'], { replaceUrl: true });
         }
       },
       error: (error) => {
@@ -57,6 +57,6 @@ export class WorkspaceSelectorComponent implements OnInit {
 
   logout(): void {
     this.authService.logout();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login'], { replaceUrl: true });
   }
 }

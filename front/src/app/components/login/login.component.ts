@@ -36,7 +36,7 @@ export class LoginComponent {
       next: (response) => {
         this.isLoading = false;
         if (response.success) {
-          this.router.navigate(['/workspaces']);
+          this.router.navigate(['/workspaces'], { replaceUrl: true });
         } else {
           this.errorMessage = response.message;
         }
