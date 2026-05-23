@@ -11,154 +11,44 @@ Sistema MVP de gestion de proyectos multi-tenant donde los usuarios pueden perte
 | Base de Datos | H2 (en memoria) |
 | Contenedores | Docker + Docker Compose |
 
----
+## Respuestas al ejercicio
+## 1. Dentro de un Workspace, se pueden crear Proyectos
+<img width="2997" height="860" alt="image" src="https://github.com/user-attachments/assets/4906deb1-7f52-4ffc-bd69-f794485113e1" />
 
-## Despliegue con Docker
+## 2. Reglas de acceso por rol:
+● Admin - Puede crear, editar, eliminar proyectos.
+● Front
+<img width="3745" height="865" alt="image" src="https://github.com/user-attachments/assets/896127e0-05b1-47bf-ad96-2545f72ac416" />
+// auth.service.ts - línea 77 Consulta del backend token se guarda los roles del usuario
+<img width="2083" height="717" alt="image" src="https://github.com/user-attachments/assets/d40339d9-582f-4843-9f3f-b80d7590af0c" />
+// auth.service.ts - línea 125-136  guarda el valor  para saber si activar o no los botones
+<img width="1240" height="617" alt="image" src="https://github.com/user-attachments/assets/9ee6ac5e-0897-4119-853b-14fd2d5cbd1f" />
+// dashboard.component.ts - línea 47  inyecto el service para que html tenga acceso y a los valores de los metodos
+<img width="910" height="140" alt="image" src="https://github.com/user-attachments/assets/82cd530c-de58-4b31-9fb5-be1159a64d88" />
+// dashboard.component.html - línea 30,54,62 activo o no dependiendo de los valores de los metodos
+<img width="1725" height="197" alt="image" src="https://github.com/user-attachments/assets/fc061553-20e9-40c3-811c-d71a759dc2fe" />
+<img width="870" height="272" alt="image" src="https://github.com/user-attachments/assets/ef693b91-45da-4a1c-bc59-a908b3fcd37b" />
+<img width="805" height="290" alt="image" src="https://github.com/user-attachments/assets/52aa62a9-b8a5-4f16-9369-e51facd5fdd7" />
+● Backend
+// ProjectService.java - línea 45 Crear proyecto
+<img width="2155" height="412" alt="image" src="https://github.com/user-attachments/assets/347b9056-feb4-443d-a299-5d0d5d16811c" />
+// ProjectService.java - línea 74 Editar proyecto
+<img width="2202" height="427" alt="image" src="https://github.com/user-attachments/assets/d912137b-eb36-4f62-b50c-b0113b881f1c" />
+// ProjectService.java - línea 74 Eliminar proyecto
+<img width="2170" height="435" alt="image" src="https://github.com/user-attachments/assets/518ea1ce-b590-4ae7-a429-c2a30c82f9f8" />
+● Editor - Solo puede crear y editar proyectos.
+● Front
+<img width="2910" height="1027" alt="image" src="https://github.com/user-attachments/assets/b6f08c85-cd08-4711-af56-f031d4fb149a" />
+● Backend
+// ProjectService.java - línea 74 Editar proyecto
+<img width="2202" height="427" alt="image" src="https://github.com/user-attachments/assets/d912137b-eb36-4f62-b50c-b0113b881f1c" />
+// ProjectService.java - línea 74 Eliminar proyecto
+<img width="2170" height="435" alt="image" src="https://github.com/user-attachments/assets/518ea1ce-b590-4ae7-a429-c2a30c82f9f8" />
+● Lector - Solo puede ver los proyectos.
+<img width="2975" height="930" alt="image" src="https://github.com/user-attachments/assets/c4514715-45c6-4ca8-86ee-44d70d760da8" />
 
-### Requisitos Previos
 
-- Docker Desktop instalado y en ejecucion
-- Puerto 8080 disponible (Backend)
-- Puerto 4200 disponible (Frontend)
 
-### Ejecutar con Docker Compose
 
-```bash
-# Clonar el repositorio
-git clone <url-del-repositorio>
-cd proyectoStefany
 
-# Construir y ejecutar
-docker compose up --build
 
-# Para ejecutar en segundo plano
-docker compose up --build -d
-
-# Para detener
-docker compose down
-```
-
-### Ejecutar solo el Backend con Docker
-
-```bash
-# Desde la raiz del proyecto
-cd backend
-
-# Construir imagen
-docker build -t saas-backend .
-
-# Ejecutar contenedor
-docker run -p 8080:8080 saas-backend
-```
-
----
-
-## Endpoints de la API
-
-Base URL: `http://localhost:8080`
-
-### Autenticacion
-
-| Metodo | Endpoint | Descripcion |
-|--------|----------|-------------|
-| POST | `/api/auth/login` | Autentica usuario y retorna workspaces disponibles |
-| POST | `/api/auth/token` | Genera token JWT para el workspace seleccionado |
-
-### Proyectos
-
-| Metodo | Endpoint | Descripcion | Auth |
-|--------|----------|-------------|------|
-| GET | `/api/projects` | Lista proyectos del workspace activo | Bearer Token |
-| POST | `/api/projects` | Crea proyecto (requiere rol ADMIN o EDITOR) | Bearer Token |
-
-### Workspaces
-
-| Metodo | Endpoint | Descripcion |
-|--------|----------|-------------|
-| GET | `/api/workspaces` | Lista todos los workspaces del sistema |
-
----
-
-## Ejemplos de Uso
-
-### 1. Login
-
-```bash
-curl -X POST http://localhost:8080/api/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"username": "jperez", "password": "password123"}'
-```
-
-### 2. Generar Token
-
-```bash
-curl -X POST http://localhost:8080/api/auth/token \
-  -H "Content-Type: application/json" \
-  -d '{"userId": 1, "workspaceId": 1}'
-```
-
-### 3. Listar Proyectos
-
-```bash
-curl -X GET http://localhost:8080/api/projects \
-  -H "Authorization: Bearer <token>"
-```
-
-### 4. Crear Proyecto
-
-```bash
-curl -X POST http://localhost:8080/api/projects \
-  -H "Authorization: Bearer <token>" \
-  -H "Content-Type: application/json" \
-  -d '{"name": "Nuevo Proyecto", "description": "Descripcion del proyecto"}'
-```
-
----
-
-## Usuarios de Prueba
-
-| Usuario | Password | Email |
-|---------|----------|-------|
-| jperez | password123 | juan.perez@email.com |
-| mgarcia | password123 | maria.garcia@email.com |
-| clopez | password123 | carlos.lopez@email.com |
-
-### Matriz de Roles
-
-| Usuario | Workspace Alfa | Workspace Beta | Workspace Gamma |
-|---------|:--------------:|:--------------:|:---------------:|
-| jperez  | ADMIN          | LECTOR         | EDITOR          |
-| mgarcia | EDITOR         | ADMIN          | LECTOR          |
-| clopez  | LECTOR         | EDITOR         | ADMIN           |
-
----
-
-## Acceso a la Consola H2
-
-Para ver la base de datos en memoria:
-
-1. Ejecutar el backend
-2. Ir a: `http://localhost:8080/h2-console`
-3. Configurar:
-   - JDBC URL: `jdbc:h2:mem:workspacesdb`
-   - User: `sa`
-   - Password: (vacio)
-
----
-
-## Estructura del Proyecto
-
-```
-proyectoStefany/
-├── backend/                    # API REST Spring Boot
-│   ├── src/
-│   ├── Dockerfile
-│   └── pom.xml
-├── frontend/                   # Aplicacion Angular (pendiente)
-├── documentacion/              # Documentacion tecnica
-│   ├── README.md               # Esquema de BD
-│   ├── README-BACKEND.md       # Documentacion de endpoints
-│   └── postman_collection.json # Coleccion Postman
-├── docker-compose.yml
-└── README.md
-```
