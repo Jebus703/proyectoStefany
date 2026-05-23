@@ -29,6 +29,9 @@
 }
 
 .btn-change {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
   padding: 0.4rem 1rem;
   border: 1px solid #4fc3f7;
   background: transparent;
@@ -39,9 +42,19 @@
   transition: all 0.3s;
 }
 
+.btn-icon {
+  width: 18px;
+  height: 18px;
+  filter: invert(68%) sepia(68%) saturate(456%) hue-rotate(166deg) brightness(101%) contrast(95%);
+}
+
 .btn-change:hover {
   background: #4fc3f7;
   color: #1a1a2e;
+}
+
+.btn-change:hover .btn-icon {
+  filter: invert(10%) sepia(20%) saturate(1000%) hue-rotate(180deg) brightness(20%) contrast(90%);
 }
 
 .header-right {

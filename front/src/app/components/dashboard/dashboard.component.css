@@ -18,6 +18,9 @@
 }
 
 .btn-create {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   padding: 0.8rem 1.5rem;
   background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
   color: white;
@@ -32,6 +35,11 @@
 .btn-create:hover {
   transform: translateY(-2px);
   box-shadow: 0 5px 20px rgba(76, 175, 80, 0.4);
+}
+
+.btn-icon {
+  width: 20px;
+  height: 20px;
 }
 
 .success-message {
@@ -66,18 +74,17 @@
   to { transform: rotate(360deg); }
 }
 
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
+.projects-section {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
 }
 
 .empty-state {
-  grid-column: 1 / -1;
   text-align: center;
   padding: 4rem 2rem;
   background: #f8f9fa;
-  border-radius: 20px;
 }
 
 .empty-icon {
@@ -95,41 +102,96 @@
   margin: 0 0 1.5rem 0;
 }
 
-.project-card {
-  background: white;
-  border-radius: 15px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s;
-  border: 1px solid #e0e0e0;
+/* Estilos de la tabla */
+.projects-table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.project-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+.projects-table thead {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: white;
 }
 
-.project-header h3 {
-  margin: 0 0 0.8rem 0;
+.projects-table th {
+  padding: 1rem 1.2rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.projects-table td {
+  padding: 1rem 1.2rem;
+  border-bottom: 1px solid #e0e0e0;
+  vertical-align: middle;
+}
+
+.projects-table tbody tr {
+  transition: background 0.2s;
+}
+
+.projects-table tbody tr:hover {
+  background: #f8f9fa;
+}
+
+.projects-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.project-name {
+  font-weight: 600;
   color: #1a1a2e;
-  font-size: 1.2rem;
 }
 
 .project-description {
   color: #666;
   font-size: 0.9rem;
-  margin: 0 0 1.2rem 0;
-  line-height: 1.5;
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.project-footer {
+.actions-cell {
   display: flex;
-  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.btn-action {
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
   align-items: center;
-  padding-top: 1rem;
-  border-top: 1px solid #e0e0e0;
-  font-size: 0.8rem;
-  color: #888;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.btn-action img {
+  width: 22px;
+  height: 22px;
+}
+
+.btn-edit {
+  background: #e3f2fd;
+}
+
+.btn-edit:hover {
+  background: #bbdefb;
+  transform: scale(1.1);
+}
+
+.btn-delete {
+  background: #ffebee;
+}
+
+.btn-delete:hover {
+  background: #ffcdd2;
+  transform: scale(1.1);
 }
 
 /* Modal Styles */
@@ -282,6 +344,61 @@
 
 .btn-submit:disabled,
 .btn-cancel:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Modal Delete */
+.modal-delete {
+  max-width: 400px;
+}
+
+.modal-body {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.delete-icon {
+  margin-bottom: 1rem;
+}
+
+.delete-icon img {
+  width: 60px;
+  height: 60px;
+}
+
+.modal-body p {
+  color: #333;
+  margin: 0 0 0.5rem 0;
+}
+
+.warning-text {
+  color: #e74c3c;
+  font-size: 0.9rem;
+}
+
+.modal-delete .modal-actions {
+  padding: 0 1.5rem 1.5rem;
+}
+
+.btn-delete-confirm {
+  padding: 0.8rem 1.5rem;
+  background: linear-gradient(135deg, #e74c3c 0%, #c62828 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.btn-delete-confirm:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(231, 76, 60, 0.4);
+}
+
+.btn-delete-confirm:disabled {
   opacity: 0.7;
   cursor: not-allowed;
 }

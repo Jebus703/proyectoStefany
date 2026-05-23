@@ -36,4 +36,16 @@ export class ProjectService {
       headers: this.getHeaders()
     });
   }
+
+  updateProject(id: number, project: ProjectRequest): Observable<ApiResponse<Project>> {
+    return this.http.put<ApiResponse<Project>>(`${this.apiUrl}/${id}`, project, {
+      headers: this.getHeaders()
+    });
+  }
+
+  deleteProject(id: number): Observable<ApiResponse<void>> {
+    return this.http.delete<ApiResponse<void>>(`${this.apiUrl}/${id}`, {
+      headers: this.getHeaders()
+    });
+  }
 }

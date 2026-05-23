@@ -65,4 +65,53 @@ public class ProjectService {
 
         return ProjectResponse.fromEntity(savedProject);
     }
+
+    /**
+     * Actualiza un proyecto existente
+     */
+    public ProjectResponse updateProject(String token, Long projectId, ProjectRequest request) {
+        // Verificar permisos de edicion
+        if (!jwtUtil.canEdit(token)) {
+            throw new ForbiddenException("No tienes permisos para editar proyectos en este workspace");
+        }
+
+        Long workspaceId = jwtUtil.getWorkspaceId(token);
+
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new NotFoundException("Proyecto no encontrado"));
+
+        // Verificar que el proyecto pertenece al workspace actual
+        if (!project.getWorkspace().getId().equals(workspaceId)) {
+            throw new ForbiddenException("No tienes acceso a este proyecto");
+        }
+
+        project.setName(request.getName());
+        project.setDescription(request.getDescription());
+
+        Project savedProject = projectRepository.save(project);
+
+        return ProjectResponse.fromEntity(savedProject);
+    }
+
+    /**
+     * Elimina un proyecto
+     */
+    public void deleteProject(String token, Long projectId) {
+        // Verificar permisos de eliminacion
+        if (!jwtUtil.canDelete(token)) {
+            throw new ForbiddenException("No tienes permisos para eliminar proyectos en este workspace");
+        }
+
+        Long workspaceId = jwtUtil.getWorkspaceId(token);
+
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new NotFoundException("Proyecto no encontrado"));
+
+        // Verificar que el proyecto pertenece al workspace actual
+        if (!project.getWorkspace().getId().equals(workspaceId)) {
+            throw new ForbiddenException("No tienes acceso a este proyecto");
+        }
+
+        projectRepository.delete(project);
+    }
 }

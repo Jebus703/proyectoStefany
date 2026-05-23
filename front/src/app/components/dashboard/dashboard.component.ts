@@ -26,6 +26,20 @@ export class DashboardComponent implements OnInit {
     description: ''
   };
 
+  // Variables para editar
+  showEditModal = false;
+  isEditing = false;
+  editProject = {
+    id: 0,
+    name: '',
+    description: ''
+  };
+
+  // Variables para eliminar
+  showDeleteModal = false;
+  isDeleting = false;
+  projectToDelete: Project | null = null;
+
   errorMessage = '';
   successMessage = '';
 
@@ -107,6 +121,84 @@ export class DashboardComponent implements OnInit {
       day: 'numeric',
       hour: '2-digit',
       minute: '2-digit'
+    });
+  }
+
+  // === Funciones para Editar ===
+  openEditModal(project: Project): void {
+    this.editProject = {
+      id: project.id,
+      name: project.name,
+      description: project.description || ''
+    };
+    this.errorMessage = '';
+    this.showEditModal = true;
+  }
+
+  closeEditModal(): void {
+    this.showEditModal = false;
+  }
+
+  updateProject(): void {
+    if (!this.editProject.name.trim()) {
+      this.errorMessage = 'El nombre del proyecto es requerido';
+      return;
+    }
+
+    this.isEditing = true;
+    this.errorMessage = '';
+
+    this.projectService.updateProject(this.editProject.id, {
+      name: this.editProject.name,
+      description: this.editProject.description
+    }).subscribe({
+      next: (response) => {
+        this.isEditing = false;
+        if (response.success) {
+          this.showEditModal = false;
+          this.successMessage = 'Proyecto actualizado exitosamente';
+          this.loadProjects();
+          setTimeout(() => this.successMessage = '', 3000);
+        }
+      },
+      error: (error) => {
+        this.isEditing = false;
+        this.errorMessage = error.error?.message || 'Error al actualizar el proyecto';
+      }
+    });
+  }
+
+  // === Funciones para Eliminar ===
+  openDeleteModal(project: Project): void {
+    this.projectToDelete = project;
+    this.showDeleteModal = true;
+  }
+
+  closeDeleteModal(): void {
+    this.showDeleteModal = false;
+    this.projectToDelete = null;
+  }
+
+  deleteProject(): void {
+    if (!this.projectToDelete) return;
+
+    this.isDeleting = true;
+
+    this.projectService.deleteProject(this.projectToDelete.id).subscribe({
+      next: (response) => {
+        this.isDeleting = false;
+        if (response.success) {
+          this.showDeleteModal = false;
+          this.projectToDelete = null;
+          this.successMessage = 'Proyecto eliminado exitosamente';
+          this.loadProjects();
+          setTimeout(() => this.successMessage = '', 3000);
+        }
+      },
+      error: (error) => {
+        this.isDeleting = false;
+        this.errorMessage = error.error?.message || 'Error al eliminar el proyecto';
+      }
     });
   }
 }
