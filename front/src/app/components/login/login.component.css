@@ -21,6 +21,24 @@
   margin-bottom: 2rem;
 }
 
+.login-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1rem;
+  background: linear-gradient(135deg, #4fc3f7 0%, #2196f3 100%);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 8px 25px rgba(33, 150, 243, 0.3);
+}
+
+.login-icon img {
+  width: 45px;
+  height: 45px;
+  filter: brightness(0) invert(1);
+}
+
 .login-header h1 {
   color: #1a1a2e;
   margin: 0 0 0.5rem 0;
