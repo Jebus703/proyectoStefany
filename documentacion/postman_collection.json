@@ -1,0 +1,273 @@
+{
+	"info": {
+		"_postman_id": "saas-workspaces-collection",
+		"name": "SaaS Workspaces API",
+		"description": "Coleccion de endpoints para el Sistema SaaS Multi-Tenant de Gestion de Proyectos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "1. Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"jperez\",\n    \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/login",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "login"]
+						},
+						"description": "Autentica al usuario y retorna sus datos junto con los workspaces disponibles.\n\nUsuarios de prueba:\n- jperez / password123\n- mgarcia / password123\n- clopez / password123"
+					},
+					"response": []
+				},
+				{
+					"name": "2. Generate Token (Workspace Alfa - ADMIN)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Guardar el token automaticamente en la variable de entorno",
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    if (jsonData.data && jsonData.data.token) {",
+									"        pm.environment.set(\"token\", jsonData.data.token);",
+									"        console.log(\"Token guardado exitosamente en la variable 'token'\");",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": 1,\n    \"workspaceId\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/token",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "token"]
+						},
+						"description": "Genera token para jperez en Workspace Alfa donde es ADMIN.\n\nEl token se guarda automaticamente en la variable {{token}}"
+					},
+					"response": []
+				},
+				{
+					"name": "2. Generate Token (Workspace Beta - LECTOR)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Guardar el token automaticamente en la variable de entorno",
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    if (jsonData.data && jsonData.data.token) {",
+									"        pm.environment.set(\"token\", jsonData.data.token);",
+									"        console.log(\"Token guardado exitosamente en la variable 'token'\");",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": 1,\n    \"workspaceId\": 2\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/token",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "token"]
+						},
+						"description": "Genera token para jperez en Workspace Beta donde es LECTOR.\n\nAl intentar crear un proyecto con este token, dara error 403."
+					},
+					"response": []
+				},
+				{
+					"name": "2. Generate Token (Workspace Gamma - EDITOR)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Guardar el token automaticamente en la variable de entorno",
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    if (jsonData.data && jsonData.data.token) {",
+									"        pm.environment.set(\"token\", jsonData.data.token);",
+									"        console.log(\"Token guardado exitosamente en la variable 'token'\");",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": 1,\n    \"workspaceId\": 3\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/token",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "token"]
+						},
+						"description": "Genera token para jperez en Workspace Gamma donde es EDITOR.\n\nPuede crear y editar, pero no eliminar proyectos."
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints de autenticacion"
+		},
+		{
+			"name": "Projects",
+			"item": [
+				{
+					"name": "3. Get Projects",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/projects",
+							"host": ["{{base_url}}"],
+							"path": ["api", "projects"]
+						},
+						"description": "Obtiene los proyectos del workspace activo (segun el token).\n\nRequiere: Token valido en el header Authorization"
+					},
+					"response": []
+				},
+				{
+					"name": "4. Create Project",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Nuevo Proyecto de Prueba\",\n    \"description\": \"Este es un proyecto creado desde Postman\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/projects",
+							"host": ["{{base_url}}"],
+							"path": ["api", "projects"]
+						},
+						"description": "Crea un nuevo proyecto en el workspace activo.\n\nRequiere:\n- Token valido\n- Rol ADMIN o EDITOR (si es LECTOR retorna 403)"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints de proyectos"
+		},
+		{
+			"name": "Workspaces",
+			"item": [
+				{
+					"name": "Get All Workspaces",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/workspaces",
+							"host": ["{{base_url}}"],
+							"path": ["api", "workspaces"]
+						},
+						"description": "Obtiene todos los workspaces del sistema.\n\nIncluye Workspace Delta que no tiene usuarios asignados."
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints de workspaces"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [""]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [""]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
