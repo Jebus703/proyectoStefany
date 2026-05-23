@@ -17,6 +17,7 @@ Sistema MVP de gestion de proyectos multi-tenant donde los usuarios pueden perte
 
 ## 2. Reglas de acceso por rol:
 ● Admin - Puede crear, editar, eliminar proyectos.
+
                                                         ● Front
 <img width="3745" height="865" alt="image" src="https://github.com/user-attachments/assets/896127e0-05b1-47bf-ad96-2545f72ac416" />
 - auth.service.ts - línea 77 Consulta del backend token se guarda los roles del usuario
@@ -29,7 +30,8 @@ Sistema MVP de gestion de proyectos multi-tenant donde los usuarios pueden perte
 <img width="1725" height="197" alt="image" src="https://github.com/user-attachments/assets/fc061553-20e9-40c3-811c-d71a759dc2fe" />
 <img width="870" height="272" alt="image" src="https://github.com/user-attachments/assets/ef693b91-45da-4a1c-bc59-a908b3fcd37b" />
 <img width="805" height="290" alt="image" src="https://github.com/user-attachments/assets/52aa62a9-b8a5-4f16-9369-e51facd5fdd7" />
-                                                          ● Backend
+
+                                                                  ● Backend
 - ProjectService.java - línea 45 Crear proyecto
 <img width="2155" height="412" alt="image" src="https://github.com/user-attachments/assets/347b9056-feb4-443d-a299-5d0d5d16811c" />
 - ProjectService.java - línea 74 Editar proyecto
