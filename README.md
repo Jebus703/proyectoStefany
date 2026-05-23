@@ -17,7 +17,7 @@ Sistema MVP de gestion de proyectos multi-tenant donde los usuarios pueden perte
 - Puerto 8080 disponible (Backend)
 - Puerto 4200 disponible (Frontend)
 
-## Ejecucion del Proyecto
-
-Clonar el repositorio 
+## Requerimientos del negocio
+1. Dentro de un Workspace, se pueden crear Proyectos
+   <img width="2997" height="860" alt="image" src="https://github.com/user-attachments/assets/98360a3d-a9ce-41b8-aa77-d8472034d3fe" />
 
