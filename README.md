@@ -60,7 +60,7 @@ Sistema MVP de gestion de proyectos multi-tenant donde los usuarios pueden perte
 2. Se requiere que incluyas un script de base de datos con datos pre-cargados para pruebas. El script debe
 contener al menos:
 Los script se incluyeron en los archivos .data estos archivos contienen los scripts de tanto el modelado de las base de datos como los datos iniciales
-estos se encuentran en el  backend en (backend/src/main/resources/data.sql)
+estos se encuentran en el  backend en [data](backend/src/main/resources/data.sql) [estructura](backend/src/main/resources/schema.sql)
 <img width="925" height="802" alt="image" src="https://github.com/user-attachments/assets/fa2611bd-745d-4fdb-ab98-37c5e3908e6b" />
 
 ● 1 Usuario de prueba
