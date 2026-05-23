@@ -1,0 +1,22 @@
+<header class="header" *ngIf="authService.isLoggedIn()">
+  <div class="header-left">
+    <h1 class="logo">SaaS Workspaces</h1>
+  </div>
+
+  <div class="header-center" *ngIf="authService.getCurrentWorkspace()">
+    <span class="workspace-name">
+      {{ authService.getCurrentWorkspace()?.name }}
+    </span>
+    <button class="btn-change" (click)="changeWorkspace()">Cambiar</button>
+  </div>
+
+  <div class="header-right">
+    <div class="user-info">
+      <span class="user-name">{{ authService.getCurrentUser()?.fullName }}</span>
+      <span class="user-role" [class]="'role-' + authService.getCurrentRole()?.name?.toLowerCase()">
+        {{ authService.getCurrentRole()?.name }}
+      </span>
+    </div>
+    <button class="btn-logout" (click)="logout()">Cerrar Sesion</button>
+  </div>
+</header>
