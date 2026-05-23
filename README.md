@@ -12,6 +12,7 @@ Sistema MVP de gestion de proyectos multi-tenant donde los usuarios pueden perte
 | Contenedores | Docker + Docker Compose |
 
 ## Respuestas al ejercicio
+
 ## 1. Dentro de un Workspace, se pueden crear Proyectos
 <img width="2997" height="860" alt="image" src="https://github.com/user-attachments/assets/4906deb1-7f52-4ffc-bd69-f794485113e1" />
 
@@ -53,7 +54,16 @@ Sistema MVP de gestion de proyectos multi-tenant donde los usuarios pueden perte
 
 <img width="2975" height="930" alt="image" src="https://github.com/user-attachments/assets/c4514715-45c6-4ca8-86ee-44d70d760da8" />
 
+## Alcance y simplificaciones
+1. NO es necesario desarrollar pantallas ni endpoints para registrar Usuarios ni crear nuevos Workspaces
+   ok no se desarrollo, no hay captura de pantalla
+2. Se requiere que incluyas un script de base de datos con datos pre-cargados para pruebas. El script debe
+contener al menos:
+Los script se incluyeron en los archivos .data estos archivos contienen los scripts de tanto el modelado de las base de datos como los datos iniciales
+estos se encuentran en el  backend en (backend/src/main/resources/data.sql)
+<img width="925" height="802" alt="image" src="https://github.com/user-attachments/assets/fa2611bd-745d-4fdb-ab98-37c5e3908e6b" />
 
+● 1 Usuario de prueba
 
 
 
