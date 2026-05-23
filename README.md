@@ -74,8 +74,8 @@ exactas de ejecución deben estar documentadas en el README.md.
 contener al menos:
 Los script se incluyeron en los archivos .data estos archivos contienen los scripts de tanto el modelado de las base de datos como los datos iniciales
 estos se encuentran en el  backend en:
-[data](backend/src/main/resources/data.sql) ,
-[estructura](backend/src/main/resources/schema.sql)
+[ Archivo_base_datos_data](backend/src/main/resources/data.sql) ,
+[ Archivo_base_datos_estructura](backend/src/main/resources/schema.sql)
 <img width="925" height="802" alt="image" src="https://github.com/user-attachments/assets/fa2611bd-745d-4fdb-ab98-37c5e3908e6b" />
 
 ● 1 Usuario de prueba
@@ -125,25 +125,25 @@ Debe validar que el rol sea Admin o Editor. Si es Lector, debe retornar un error
                                                         ANGULAR 
 
 1. Pantalla de Login: Formulario básico para ingresar las credenciales del Usuario pre-cargado.
-[Login](front/src/app/components/login/login.component.html),
-[Login](front/src/app/components/login/login.component.css),
-[Login](front/src/app/components/login/login.component.ts)
+[Login_html](front/src/app/components/login/login.component.html),
+[Login_css](front/src/app/components/login/login.component.css),
+[Login_ts](front/src/app/components/login/login.component.ts)
 <img width="3047" height="1955" alt="image" src="https://github.com/user-attachments/assets/a777da62-183f-4c72-8113-874c9c5fcb59" />
 
 2. Selector de Workspace: Tras el login, una vista o modal simple que muestre los Workspaces disponibles
 devueltos por la API para que el usuario elija uno.
-[workspace](front/src/app/components/workspace/workspace-selector.component.html),
-[workspace](front/src/app/components/workspace/workspace-selector.component.css),
-[workspace](front/src/app/components/workspace/workspace-selector.component.ts)
+[workspace_html](front/src/app/components/workspace/workspace-selector.component.html),
+[workspace_css](front/src/app/components/workspace/workspace-selector.component.css),
+[workspace_ts](front/src/app/components/workspace/workspace-selector.component.ts)
 <img width="2982" height="1840" alt="image" src="https://github.com/user-attachments/assets/827bc212-94b1-43bc-8ea4-ec801a0c62c3" />
 
 3. Dashboard de Proyectos: Muestra la lista de Proyectos del Workspace seleccionado.
-[dashboard](front/src/app/components/dashboard/dashboard.component.html),
-[dashboard](front/src/app/components/dashboard/dashboard.component.css),
-[dashboard](front/src/app/components/dashboard/dashboard.component.ts),
-[header](front/src/app/components/header/header.component.html),
-[header](front/src/app/components/header/header.component.css),
-[header](front/src/app/components/header/header.component.ts)
+[dashboard_html](front/src/app/components/dashboard/dashboard.component.html),
+[dashboard_css](front/src/app/components/dashboard/dashboard.component.css),
+[dashboard_ts](front/src/app/components/dashboard/dashboard.component.ts),
+[header_html](front/src/app/components/header/header.component.html),
+[header_css](front/src/app/components/header/header.component.css),
+[header_ts](front/src/app/components/header/header.component.ts)
 
 <img width="3802" height="1205" alt="image" src="https://github.com/user-attachments/assets/c83ded6a-01ca-4c69-996b-88c5093d7bbd" />
 
