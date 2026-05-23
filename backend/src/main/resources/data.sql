@@ -47,19 +47,19 @@ INSERT INTO user_workspace (user_id, workspace_id, role_id) VALUES
 (3, 3, 1);  -- clopez es ADMIN en Workspace Gamma
 
 -- =============================================
--- PROYECTOS DE EJEMPLO
+-- PROYECTOS DE EJEMPLO (sin IDs explicitos para evitar conflictos con auto-increment)
 -- =============================================
 -- Proyectos en Workspace Alfa
-INSERT INTO projects (id, name, description, workspace_id, created_by) VALUES
-(1, 'Sistema de Inventario', 'Desarrollo del modulo de inventario', 1, 1),
-(2, 'App Movil Ventas', 'Aplicacion movil para equipo de ventas', 1, 2);
+INSERT INTO projects (name, description, workspace_id, created_by) VALUES
+('Sistema de Inventario', 'Desarrollo del modulo de inventario', 1, 1),
+('App Movil Ventas', 'Aplicacion movil para equipo de ventas', 1, 2);
 
 -- Proyectos en Workspace Beta
-INSERT INTO projects (id, name, description, workspace_id, created_by) VALUES
-(3, 'Testing Automatizado', 'Suite de pruebas E2E', 2, 2),
-(4, 'Documentacion API', 'Documentacion tecnica de APIs', 2, 3);
+INSERT INTO projects (name, description, workspace_id, created_by) VALUES
+('Testing Automatizado', 'Suite de pruebas E2E', 2, 2),
+('Documentacion API', 'Documentacion tecnica de APIs', 2, 3);
 
 -- Proyectos en Workspace Gamma
-INSERT INTO projects (id, name, description, workspace_id, created_by) VALUES
-(5, 'Prototipo IA', 'Prototipo de asistente con inteligencia artificial', 3, 3),
-(6, 'Dashboard Analytics', 'Panel de metricas y analytics en tiempo real', 3, 1);
+INSERT INTO projects (name, description, workspace_id, created_by) VALUES
+('Prototipo IA', 'Prototipo de asistente con inteligencia artificial', 3, 3),
+('Dashboard Analytics', 'Panel de metricas y analytics en tiempo real', 3, 1);
