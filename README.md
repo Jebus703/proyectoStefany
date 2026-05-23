@@ -11,6 +11,23 @@ Sistema MVP de gestion de proyectos multi-tenant donde los usuarios pueden perte
 | Base de Datos | H2 (en memoria) |
 | Contenedores | Docker + Docker Compose |
 
+---
+
+## Base de Datos
+
+## Acceso a la Consola H2
+
+Para ver la base de datos en memoria:
+
+1. Ejecutar el backend
+2. Ir a: `http://localhost:8080/h2-console`
+3. Configurar:
+   - JDBC URL: `jdbc:h2:mem:workspacesdb`
+   - User: `sa`
+   - Password: (vacio)
+
+---
+
 ## Requisitos Previos
 
 - Docker Desktop instalado y en ejecucion
@@ -19,5 +36,5 @@ Sistema MVP de gestion de proyectos multi-tenant donde los usuarios pueden perte
 
 ## Ejecucion del Proyecto
 
-Clonar el repositorio 
+Clonar el repositorio
 
