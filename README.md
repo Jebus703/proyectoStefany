@@ -17,11 +17,78 @@ Sistema MVP de gestion de proyectos multi-tenant donde los usuarios pueden perte
 público accesible (GitHub, GitLab o Bitbucket). No se aceptarán archivos ZIP, adjuntos por correo o
 enlaces a carpetas de Google Drive/OneDrive.
 
+● Link github :   https://github.com/Jebus703/proyectoStefany .
+
 3. Ejecución 100% en Docker: La solución completa (Base de datos con su script de datos pre-cargados,
 Back-end y Front-end) debe ser capaz de levantarse localmente utilizando Docker. Se debe incluir un
 archivo docker-compose.yml (y sus respectivos Dockerfile) de manera que con solo ejecutar el comando
 docker compose up --build en la raíz del proyecto, toda la aplicación quede funcional. Las instrucciones
 exactas de ejecución deben estar documentadas en el README.md.
+
+### Instrucciones de Ejecución con Docker
+
+#### Prerrequisitos
+- Docker Desktop instalado y ejecutándose
+
+#### Archivos Docker incluidos
+| Archivo | Ubicación | Descripción |
+|---------|-----------|-------------|
+[Dockerfile Backend](backend/Dockerfile)| build para Spring Boot |
+[Dockerfile front](front/Dockerfile)    | build para Angular     |
+[Dockerfile front](Dockerfile)    | Orquestador de servicios |
+
+
+#### Comando para ejecutar
+```bash
+# 1. Clonar el repositorio
+git clone https://github.com/Jebus703/proyectoStefany.git
+
+# 2. Entrar a la carpeta del proyecto
+cd proyectoStefany
+
+# 3. Levantar toda la aplicación
+docker compose up --build
+```
+
+#### URLs de acceso
+| Servicio | URL |
+|----------|-----|
+| Frontend | http://localhost:4200 |
+| Backend API | http://localhost:8080 |
+| Consola H2 | http://localhost:8080/h2-console |
+
+#### Credenciales de la base de datos H2
+| Campo | Valor |
+|-------|-------|
+| JDBC URL | `jdbc:h2:mem:workspacesdb` |
+| Usuario | `sa` |
+| Contraseña | *(vacío)* |
+
+#### Usuarios de prueba pre-cargados
+| Usuario | Contraseña | Workspaces |
+|---------|------------|------------|
+| jperez | password123 | Alfa (Admin), Beta (Lector) |
+| mgarcia | password123 | Alfa (Editor), Gamma (Admin) |
+| clopez | password123 | Beta (Editor), Gamma (Lector) |
+
+#### Para detener la aplicación
+```bash
+docker compose down
+```
+
+#### Arquitectura Docker
+```
+┌─────────────────────────────────────────────────────┐
+│              Red: workspaces-network                │
+│                                                     │
+│  ┌──────────────────┐    ┌──────────────────────┐  │
+│  │    Frontend      │    │      Backend         │  │
+│  │  (Angular+Nginx) │───▶│  (Spring Boot + H2)  │  │
+│  │   Puerto: 4200   │    │    Puerto: 8080      │  │
+│  └──────────────────┘    └──────────────────────┘  │
+│                                                     │
+└─────────────────────────────────────────────────────┘
+```
 
 
 ## Respuestas al ejercicio

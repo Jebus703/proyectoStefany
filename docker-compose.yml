@@ -1,0 +1,46 @@
+# ===========================================
+# Docker Compose - SaaS Workspaces
+# ===========================================
+# Ejecutar: docker compose up --build
+# ===========================================
+
+services:
+  # ===========================================
+  # Backend - Spring Boot + H2 Database
+  # ===========================================
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: workspaces-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=default
+      - JAVA_OPTS=-Xms256m -Xmx512m
+    restart: unless-stopped
+    networks:
+      - workspaces-network
+
+  # ===========================================
+  # Frontend - Angular + Nginx
+  # ===========================================
+  frontend:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    container_name: workspaces-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - workspaces-network
+
+# ===========================================
+# Red compartida
+# ===========================================
+networks:
+  workspaces-network:
+    driver: bridge

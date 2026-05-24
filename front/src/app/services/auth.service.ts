@@ -5,6 +5,7 @@ import { User } from '../models/user.model';
 import { Workspace } from '../models/workspace.model';
 import { Role } from '../models/role.model';
 import { ApiResponse } from '../models/api-response.model';
+import { environment } from '../../environments/environment';
 
 interface LoginRequest {
   username: string;
@@ -32,7 +33,7 @@ interface TokenResponse {
 })
 export class AuthService {
 
-  private apiUrl = 'http://localhost:8080/api/auth';
+  private apiUrl = `${environment.apiUrl}/auth`;
 
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   private currentWorkspaceSubject = new BehaviorSubject<Workspace | null>(null);
