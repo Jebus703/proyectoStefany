@@ -1,0 +1,202 @@
+<app-header></app-header>
+
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h2>Proyectos</h2>
+    <button
+      *ngIf="authService.canCreate()"
+      class="btn-create"
+      (click)="openCreateModal()"
+    >
+      <img src="assets/new-folder.png" alt="" class="btn-icon" />
+      Nuevo Proyecto
+    </button>
+  </div>
+
+  <div class="success-message" *ngIf="successMessage">
+    {{ successMessage }}
+  </div>
+
+  <div class="loading" *ngIf="isLoading">
+    <div class="spinner-large"></div>
+    <p>Cargando proyectos...</p>
+  </div>
+
+  <div class="projects-section" *ngIf="!isLoading">
+    <div class="empty-state" *ngIf="projects.length === 0">
+      <div class="empty-icon">📁</div>
+      <h3>No hay proyectos</h3>
+      <p>Este workspace aun no tiene proyectos.</p>
+      <button *ngIf="authService.canCreate()" class="btn-create" (click)="openCreateModal()">
+        <img src="assets/new-folder.png" alt="" class="btn-icon" />
+        Crear primer proyecto
+      </button>
+    </div>
+
+    <table class="projects-table" *ngIf="projects.length > 0">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Descripcion</th>
+          <th>Creado por</th>
+          <th>Fecha</th>
+          <th *ngIf="authService.canEdit() || authService.canDelete()">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let project of projects">
+          <td class="project-name">{{ project.name }}</td>
+          <td class="project-description">{{ project.description || 'Sin descripcion' }}</td>
+          <td>{{ project.createdBy }}</td>
+          <td>{{ formatDate(project.createdAt) }}</td>
+          <td *ngIf="authService.canEdit() || authService.canDelete()" class="actions-cell">
+            <button
+              *ngIf="authService.canEdit()"
+              class="btn-action btn-edit"
+              (click)="openEditModal(project)"
+              title="Editar proyecto"
+            >
+              <img src="assets/folder.png" alt="Editar" />
+            </button>
+            <button
+              *ngIf="authService.canDelete()"
+              class="btn-action btn-delete"
+              (click)="openDeleteModal(project)"
+              title="Eliminar proyecto"
+            >
+              <img src="assets/trash-folder.png" alt="Eliminar" />
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal Crear Proyecto -->
+<div class="modal-overlay" *ngIf="showCreateModal" (click)="closeCreateModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Nuevo Proyecto</h3>
+      <button class="btn-close" (click)="closeCreateModal()">×</button>
+    </div>
+
+    <form (ngSubmit)="createProject()" class="modal-form">
+      <div class="form-group">
+        <label for="projectName">Nombre del proyecto *</label>
+        <input
+          type="text"
+          id="projectName"
+          [(ngModel)]="newProject.name"
+          name="name"
+          placeholder="Ej: Sistema de Ventas"
+          [disabled]="isCreating"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="projectDescription">Descripcion</label>
+        <textarea
+          id="projectDescription"
+          [(ngModel)]="newProject.description"
+          name="description"
+          placeholder="Describe el proyecto..."
+          rows="4"
+          [disabled]="isCreating"
+        ></textarea>
+      </div>
+
+      <div class="error-message" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" (click)="closeCreateModal()" [disabled]="isCreating">
+          Cancelar
+        </button>
+        <button type="submit" class="btn-submit" [disabled]="isCreating">
+          <span *ngIf="!isCreating">Crear Proyecto</span>
+          <span *ngIf="isCreating">Creando...</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Editar Proyecto -->
+<div class="modal-overlay" *ngIf="showEditModal" (click)="closeEditModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Editar Proyecto</h3>
+      <button class="btn-close" (click)="closeEditModal()">×</button>
+    </div>
+
+    <form (ngSubmit)="updateProject()" class="modal-form">
+      <div class="form-group">
+        <label for="editProjectName">Nombre del proyecto *</label>
+        <input
+          type="text"
+          id="editProjectName"
+          [(ngModel)]="editProject.name"
+          name="name"
+          placeholder="Ej: Sistema de Ventas"
+          [disabled]="isEditing"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="editProjectDescription">Descripcion</label>
+        <textarea
+          id="editProjectDescription"
+          [(ngModel)]="editProject.description"
+          name="description"
+          placeholder="Describe el proyecto..."
+          rows="4"
+          [disabled]="isEditing"
+        ></textarea>
+      </div>
+
+      <div class="error-message" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" (click)="closeEditModal()" [disabled]="isEditing">
+          Cancelar
+        </button>
+        <button type="submit" class="btn-submit" [disabled]="isEditing">
+          <span *ngIf="!isEditing">Guardar Cambios</span>
+          <span *ngIf="isEditing">Guardando...</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Confirmar Eliminacion -->
+<div class="modal-overlay" *ngIf="showDeleteModal" (click)="closeDeleteModal()">
+  <div class="modal-content modal-delete" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Confirmar Eliminacion</h3>
+      <button class="btn-close" (click)="closeDeleteModal()">×</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="delete-icon">
+        <img src="assets/trash-folder.png" alt="Eliminar" />
+      </div>
+      <p>¿Estas seguro de que deseas eliminar el proyecto <strong>{{ projectToDelete?.name }}</strong>?</p>
+      <p class="warning-text">Esta accion no se puede deshacer.</p>
+    </div>
+
+    <div class="modal-actions">
+      <button type="button" class="btn-cancel" (click)="closeDeleteModal()" [disabled]="isDeleting">
+        Cancelar
+      </button>
+      <button type="button" class="btn-delete-confirm" (click)="deleteProject()" [disabled]="isDeleting">
+        <span *ngIf="!isDeleting">Eliminar</span>
+        <span *ngIf="isDeleting">Eliminando...</span>
+      </button>
+    </div>
+  </div>
+</div>

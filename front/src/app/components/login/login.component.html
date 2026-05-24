@@ -1,0 +1,55 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="login-icon">
+        <img src="assets/administrator.png" alt="Administrator" />
+      </div>
+      <h1>SaaS Workspaces</h1>
+      <p>Sistema de Gestion de Proyectos</p>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" class="login-form">
+      <div class="form-group">
+        <label for="username">Usuario</label>
+        <input
+          type="text"
+          id="username"
+          [(ngModel)]="username"
+          name="username"
+          placeholder="Ingresa tu usuario"
+          [disabled]="isLoading"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Contrasena</label>
+        <input
+          type="password"
+          id="password"
+          [(ngModel)]="password"
+          name="password"
+          placeholder="Ingresa tu contrasena"
+          [disabled]="isLoading"
+        />
+      </div>
+
+      <div class="error-message" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+
+      <button type="submit" class="btn-login" [disabled]="isLoading">
+        <span *ngIf="!isLoading">Iniciar Sesion</span>
+        <span *ngIf="isLoading">Cargando...</span>
+      </button>
+    </form>
+
+    <div class="login-footer">
+      <p>Usuarios de prueba:</p>
+      <ul>
+        <li><strong>jperez</strong> / password123</li>
+        <li><strong>mgarcia</strong> / password123</li>
+        <li><strong>clopez</strong> / password123</li>
+      </ul>
+    </div>
+  </div>
+</div>

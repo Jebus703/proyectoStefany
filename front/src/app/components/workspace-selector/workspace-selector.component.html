@@ -1,0 +1,36 @@
+<div class="selector-container">
+  <div class="selector-card">
+    <div class="selector-header">
+      <h1>Hola, {{ userName }}</h1>
+      <p>Selecciona un espacio de trabajo</p>
+    </div>
+
+    <div class="workspaces-grid">
+      <div
+        *ngFor="let workspace of workspaces"
+        class="workspace-card"
+        [class.loading]="isLoading && selectedWorkspaceId === workspace.id"
+        (click)="selectWorkspace(workspace)"
+      >
+        <div class="workspace-icon">
+          <span>{{ workspace.name.charAt(10) }}</span>
+        </div>
+        <div class="workspace-info">
+          <h3>{{ workspace.name }}</h3>
+          <p>{{ workspace.description }}</p>
+        </div>
+        <div class="workspace-role" [class]="getRoleClass(workspace.role)">
+          {{ workspace.role }}
+        </div>
+        <div class="workspace-arrow">
+          <span *ngIf="!(isLoading && selectedWorkspaceId === workspace.id)">→</span>
+          <span *ngIf="isLoading && selectedWorkspaceId === workspace.id" class="spinner"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="selector-footer">
+      <button class="btn-logout" (click)="logout()">Cerrar Sesion</button>
+    </div>
+  </div>
+</div>

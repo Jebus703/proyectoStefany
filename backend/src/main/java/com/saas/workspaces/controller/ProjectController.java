@@ -54,6 +54,37 @@ public class ProjectController {
     }
 
     /**
+     * PUT /api/projects/{id}
+     * Actualiza un proyecto existente
+     */
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse<ProjectResponse>> updateProject(
+            @RequestHeader("Authorization") String authHeader,
+            @PathVariable Long id,
+            @Valid @RequestBody ProjectRequest request) {
+
+        String token = validateAndExtractToken(authHeader);
+        ProjectResponse project = projectService.updateProject(token, id, request);
+
+        return ResponseEntity.ok(ApiResponse.success("Proyecto actualizado exitosamente", project));
+    }
+
+    /**
+     * DELETE /api/projects/{id}
+     * Elimina un proyecto
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<Void>> deleteProject(
+            @RequestHeader("Authorization") String authHeader,
+            @PathVariable Long id) {
+
+        String token = validateAndExtractToken(authHeader);
+        projectService.deleteProject(token, id);
+
+        return ResponseEntity.ok(ApiResponse.success("Proyecto eliminado exitosamente", null));
+    }
+
+    /**
      * Valida y extrae el token del header Authorization
      */
     private String validateAndExtractToken(String authHeader) {
